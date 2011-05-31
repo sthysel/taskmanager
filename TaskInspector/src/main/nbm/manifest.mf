@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+OpenIDE-Module-Localizing-Bundle: thyscom/taskinspector/Bundle.properties
+OpenIDE-Module-Layer: thyscom/taskinspector/layer.xml
+OpenIDE-Module-Requires: org.openide.windows.WindowManager
