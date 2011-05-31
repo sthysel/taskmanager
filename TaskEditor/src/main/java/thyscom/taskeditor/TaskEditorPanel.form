@@ -37,11 +37,11 @@
                           <Component id="prioritySlider" alignment="0" pref="454" max="32767" attributes="0"/>
                           <Component id="progresSlider" alignment="0" pref="454" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="taskIDText" min="-2" pref="162" max="-2" attributes="0"/>
+                              <Component id="taskIDText" pref="162" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="parentIDText" min="-2" pref="209" max="-2" attributes="0"/>
+                              <Component id="parentIDText" pref="209" max="32767" attributes="0"/>
                           </Group>
                           <Component id="dueDateText" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
                       </Group>
