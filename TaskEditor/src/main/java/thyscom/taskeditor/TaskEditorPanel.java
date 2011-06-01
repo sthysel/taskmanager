@@ -10,6 +10,7 @@ import java.beans.PropertyChangeSupport;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.apache.log4j.Logger;
@@ -37,7 +38,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
     public Task getTask() {
         return task;
     }
-    
+
     public void setTask(Task task) {
         Task old = this.task;
         this.task = task;
@@ -62,20 +63,22 @@ public class TaskEditorPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         dueDateText = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        prioritySlider = new javax.swing.JSlider();
         jLabel5 = new javax.swing.JLabel();
         progresSlider = new javax.swing.JSlider();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         descriptionText = new javax.swing.JTextArea();
+        priorityComboBox = new javax.swing.JComboBox();
 
         jLabel1.setText("Task ID");
 
         taskIDText.setEditable(false);
+        taskIDText.setFocusable(false);
 
         jLabel2.setText("Parent ID");
 
         parentIDText.setEditable(false);
+        parentIDText.setFocusable(false);
 
         nameText.getDocument().addDocumentListener(docListener);
 
@@ -84,18 +87,6 @@ public class TaskEditorPanel extends javax.swing.JPanel {
         dueDateText.getDocument().addDocumentListener(docListener);
 
         jLabel4.setText("Due date");
-
-        prioritySlider.setMajorTickSpacing(1);
-        prioritySlider.setMaximum(2);
-        prioritySlider.setPaintLabels(true);
-        prioritySlider.setPaintTicks(true);
-        prioritySlider.setSnapToTicks(true);
-        prioritySlider.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        prioritySlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                prioritySliderStateChanged(evt);
-            }
-        });
 
         jLabel5.setText("Priority");
 
@@ -116,6 +107,13 @@ public class TaskEditorPanel extends javax.swing.JPanel {
         descriptionText.getDocument().addDocumentListener(docListener);
         jScrollPane1.setViewportView(descriptionText);
 
+        priorityComboBox.setModel(new DefaultComboBoxModel(Task.Priority.values()));
+        priorityComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                priorityComboBoxItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,21 +128,28 @@ public class TaskEditorPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel3))
-                        .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(nameText, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
-                            .addComponent(prioritySlider, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
-                            .addComponent(progresSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel6))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(taskIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                                .addGap(5, 5, 5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nameText, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(taskIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(parentIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(dueDateText, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(24, 24, 24)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(priorityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(parentIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
-                            .addComponent(dueDateText, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(progresSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -163,35 +168,29 @@ public class TaskEditorPanel extends javax.swing.JPanel {
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(dueDateText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(priorityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(prioritySlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(progresSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel5)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(progresSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(39, 39, 39)
                         .addComponent(jLabel6)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void prioritySliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_prioritySliderStateChanged
-        updateTask();
-    }//GEN-LAST:event_prioritySliderStateChanged
 
     private void progresSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_progresSliderStateChanged
         updateTask();
     }//GEN-LAST:event_progresSliderStateChanged
 
+    private void priorityComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_priorityComboBoxItemStateChanged
+        updateTask();
+    }//GEN-LAST:event_priorityComboBoxItemStateChanged
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea descriptionText;
     private javax.swing.JTextField dueDateText;
@@ -204,7 +203,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameText;
     private javax.swing.JTextField parentIDText;
-    private javax.swing.JSlider prioritySlider;
+    private javax.swing.JComboBox priorityComboBox;
     private javax.swing.JSlider progresSlider;
     private javax.swing.JTextField taskIDText;
     // End of variables declaration//GEN-END:variables
@@ -224,15 +223,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
 
     private void setPriority() {
         Task.Priority priority = task.getPriority();
-        if (priority == Task.Priority.LOW) {
-            prioritySlider.setValue(0);
-        }
-        if (priority == Task.Priority.MEDIUM) {
-            prioritySlider.setValue(1);
-        }
-        if (priority == Task.Priority.HIGH) {
-            prioritySlider.setValue(2);
-        }
+        priorityComboBox.setSelectedItem(priority);
     }
 
     private void setProgress() {
@@ -250,6 +241,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
         updateTaskDueDate();
         updateTaskPriority();
         task.setProgress(progresSlider.getValue());
+        task.setPriority((Task.Priority) priorityComboBox.getSelectedItem());
         task.setName(nameText.getText());
         task.setDescription(descriptionText.getText());
     }
@@ -266,22 +258,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
     }
 
     private void updateTaskPriority() {
-        if (!prioritySlider.getValueIsAdjusting()) {
-            Task.Priority pri = null;
-            int priority = prioritySlider.getValue();
-            switch (priority) {
-                case 0:
-                    pri = Task.Priority.LOW;
-                    break;
-                case 1:
-                    pri = Task.Priority.MEDIUM;
-                    break;
-                case 2:
-                    pri = Task.Priority.HIGH;
-                    break;
-            }
-            task.setPriority(pri);
-        }
+        task.setPriority((Task.Priority) priorityComboBox.getSelectedItem());
     }
 
     private void makeDocumentListerner() {
