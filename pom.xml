@@ -71,6 +71,7 @@
     <module>TaskIDGenerator</module>
     <module>TaskLog</module>
     <module>TaskInspector</module>
+    <module>DueList</module>
   </modules>
 
     <properties>
