@@ -190,7 +190,7 @@
     <Component class="javax.swing.JComboBox" name="priorityComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new DefaultComboBoxModel(Task.Priority.values())" type="code"/>
+          <Connection code="new EnumComboBoxModel&lt;Task.Priority&gt;(Task.Priority.class)" type="code"/>
         </Property>
       </Properties>
       <Events>

@@ -10,10 +10,10 @@ import java.beans.PropertyChangeSupport;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.apache.log4j.Logger;
+import org.jdesktop.swingx.combobox.EnumComboBoxModel;
 import thyscom.taskmodel.api.Task;
 
 /**
@@ -107,7 +107,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
         descriptionText.getDocument().addDocumentListener(docListener);
         jScrollPane1.setViewportView(descriptionText);
 
-        priorityComboBox.setModel(new DefaultComboBoxModel(Task.Priority.values()));
+        priorityComboBox.setModel(new EnumComboBoxModel<Task.Priority>(Task.Priority.class));
         priorityComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 priorityComboBoxItemStateChanged(evt);
