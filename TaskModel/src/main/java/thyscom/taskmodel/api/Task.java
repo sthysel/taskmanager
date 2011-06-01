@@ -25,7 +25,22 @@ public interface Task extends Serializable {
 
     enum Priority {
 
-        LOW, MEDIUM, HIGH
+        LOW, MEDIUM, HIGH;
+
+        @Override
+        public String toString() {
+            // TODO internationalize this
+            if (this == LOW) {
+                return "Low";
+            }
+            if (this == MEDIUM) {
+                return "Medium";
+            }
+            if (this == HIGH) {
+                return "High";
+            }
+            return "error";
+        }
     }
 
     Priority getPriority();
