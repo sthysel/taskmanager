@@ -40,14 +40,14 @@ public class TaskImpl implements Task {
     }
 
     private String assignID() {
-         IDGenerator idGen =  Lookup.getDefault().lookup(IDGenerator.class);
-         if(idGen != null) {
-             return "" + idGen.getID();
-         } else {
-             return "XXX" + System.currentTimeMillis();
-         }
+        IDGenerator idGen = Lookup.getDefault().lookup(IDGenerator.class);
+        if (idGen != null) {
+            return "" + idGen.getID();
+        } else {
+            return "XXX" + System.currentTimeMillis();
+        }
     }
-    
+
     @Override
     public String getId() {
         return ID;
@@ -65,8 +65,9 @@ public class TaskImpl implements Task {
 
     @Override
     public void setName(String name) {
+        String old = this.name;
         this.name = name;
-
+        changeSupport.firePropertyChange(PROPERTY_NAME, old, name);
     }
 
     @Override
@@ -165,16 +166,11 @@ public class TaskImpl implements Task {
         sb.append("ID: " + getId() + "\n");
         sb.append("ParentID: " + getParentId() + "\n");
         sb.append("Name: " + getName() + "\n");
-        sb.append("Due date:"  + DateFormat.getInstance().format(dueDate) + "\n");
+        sb.append("Due date:" + DateFormat.getInstance().format(dueDate) + "\n");
         sb.append("Description: " + getDescription() + "\n");
         sb.append("Priority: " + getPriority() + "\n");
         sb.append("Progress: " + getProgress() + "\n");
-        
+
         return sb.toString();
-    }
-
-    private IDGenerator getIDGenerator() {
-        return Lookup.getDefault().lookup(IDGenerator.class);
-
     }
 }

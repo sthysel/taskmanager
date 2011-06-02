@@ -24,11 +24,11 @@ public class TaskNode extends AbstractNode {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
-                if(evt.getPropertyName().equals(Task.PROPERTY_NAME)) {
+                if (evt.getPropertyName().equals(Task.PROPERTY_NAME)) {
                     setName(evt.getNewValue() + "");
                 }
             }
         });
-        
+
     }
 }
