@@ -32,6 +32,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
     public TaskEditorPanel() {
         makeDocumentListerner();
         initComponents();
+        pcs = new PropertyChangeSupport(this);
     }
 
     // The topcomponent wants the tasks
@@ -93,6 +94,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
         progresSlider.setMajorTickSpacing(25);
         progresSlider.setPaintLabels(true);
         progresSlider.setPaintTicks(true);
+        progresSlider.setValue(0);
         progresSlider.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 progresSliderStateChanged(evt);
@@ -122,7 +124,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGap(76, 76, 76)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -136,11 +138,11 @@ public class TaskEditorPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nameText, javax.swing.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(taskIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
+                                        .addComponent(taskIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(parentIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
+                                        .addComponent(parentIDText, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(dueDateText, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(24, 24, 24)
@@ -149,7 +151,7 @@ public class TaskEditorPanel extends javax.swing.JPanel {
                                         .addComponent(priorityComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(progresSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)))))
+                                .addComponent(progresSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

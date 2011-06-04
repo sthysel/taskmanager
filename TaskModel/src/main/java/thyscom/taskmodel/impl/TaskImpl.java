@@ -24,7 +24,7 @@ public class TaskImpl implements Task {
     private Priority priority = Priority.LOW;
     private String description = "";
     private List<Task> children = new ArrayList<Task>();
-    private PropertyChangeSupport changeSupport;
+    private PropertyChangeSupport pcs;
     private int progress = 0;
 
     public TaskImpl(String name, String parentID) {
@@ -32,11 +32,11 @@ public class TaskImpl implements Task {
         this.parentID = parentID;
         this.ID = assignID();
         this.children = new ArrayList<Task>();
-        changeSupport = new PropertyChangeSupport(this);
+        pcs = new PropertyChangeSupport(this);
     }
 
     public TaskImpl() {
-        this("", "");
+        this("New Task", "");
     }
 
     private String assignID() {
@@ -67,7 +67,7 @@ public class TaskImpl implements Task {
     public void setName(String name) {
         String old = this.name;
         this.name = name;
-        changeSupport.firePropertyChange(PROPERTY_NAME, old, name);
+        pcs.firePropertyChange(PROPERTY_NAME, old, name);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class TaskImpl implements Task {
     public void setDueDate(Date dueDate) {
         Date old = this.dueDate;
         this.dueDate = dueDate;
-        changeSupport.firePropertyChange(PROPERY_DUE_DATE, old, dueDate);
+        pcs.firePropertyChange(PROPERY_DUE_DATE, old, dueDate);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class TaskImpl implements Task {
     public void setPriority(Priority priority) {
         Priority old = this.priority;
         this.priority = priority;
-        changeSupport.firePropertyChange(PROPERTY_PRIORITY, old, priority);
+        pcs.firePropertyChange(PROPERTY_PRIORITY, old, priority);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class TaskImpl implements Task {
     public void setProgress(int progress) {
         int old = this.progress;
         this.progress = progress;
-        changeSupport.firePropertyChange(PROPERTY_PROGRESS, old, progress);
+        pcs.firePropertyChange(PROPERTY_PROGRESS, old, progress);
     }
 
     @Override
@@ -115,13 +115,13 @@ public class TaskImpl implements Task {
     public void setDescription(String description) {
         String old = this.description;
         this.description = description;
-        changeSupport.firePropertyChange(PROPERY_DESCRIPTION, old, description);
+        pcs.firePropertyChange(PROPERY_DESCRIPTION, old, description);
     }
 
     @Override
     public void addChild(Task childTask) {
         children.add(childTask);
-        changeSupport.firePropertyChange(PROPERTY_CHILD_ADD, null, children);
+        pcs.firePropertyChange(PROPERTY_CHILD_ADD, null, children);
     }
 
     @Override
@@ -132,18 +132,18 @@ public class TaskImpl implements Task {
     @Override
     public boolean removeChild(Task child) {
         boolean res = children.remove(child);
-        changeSupport.firePropertyChange(PROPERTY_CHILD_REMOVE, null, children);
+        pcs.firePropertyChange(PROPERTY_CHILD_REMOVE, null, children);
         return res;
     }
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
+        pcs.addPropertyChangeListener(listener);
     }
 
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.removePropertyChangeListener(listener);
+        pcs.removePropertyChangeListener(listener);
     }
 
     @Override

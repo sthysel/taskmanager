@@ -109,7 +109,7 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public List<Task> getAllParentTasks() {
-        return (List<Task>) Collections.unmodifiableCollection(taskStore);
+        return Collections.unmodifiableList(taskStore);
     }
 
     @Override
