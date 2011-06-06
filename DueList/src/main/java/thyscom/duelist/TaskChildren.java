@@ -79,13 +79,13 @@ public class TaskChildren extends Children.Array implements ChangeListener, Prop
      * @return 
      */
     private Interval getInterval() {
-        // get tdoay, set the week to the spinner value
+        // get today, set the week to the spinner value
         // set the day to thebegiining of the week to get the start time
         // add a week to get the end time
         DateTime now = new DateTime();
         DateTime begin = now.withWeekyear((Integer) spinner.getValue());
-        DateTime end = now.plusDays(7);
-        return new Interval(begin.getMillis(), end.getMillis());
+        DateTime end = begin.plusDays(7);
+        return new Interval(begin, end);
     }
 
     @Override
@@ -100,9 +100,10 @@ public class TaskChildren extends Children.Array implements ChangeListener, Prop
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (thisIsATaskEvent(evt)) {
-            updateNodes();
-        }
+//        if (thisIsATaskEvent(evt)) {
+//            updateNodes();
+//        }
+        updateNodes();
     }
 
     private boolean thisIsATaskEvent(PropertyChangeEvent evt) {
