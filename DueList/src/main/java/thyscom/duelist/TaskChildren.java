@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -34,12 +35,8 @@ public class TaskChildren extends Children.Array implements ChangeListener, Prop
     
     @Override
     public Collection<Node> initCollection() {
-        
-        ArrayList<Task> dueTasks = new ArrayList<Task>();
-
-        // populate the duetasks list
-        dueFilter.getAllDueTasksForGivenWeek((Integer) spinner.getValue(), dueTasks);
-
+        // ask dueFilter for the list of currently due tasks
+        List<Task> dueTasks = dueFilter.getAllDueTasksForGivenWeek((Integer) spinner.getValue());
         // wrap tasks in nodes and register propertychangelistener
         Collection<Node> dueNodes = new ArrayList<Node>(dueTasks.size());
         for (Task task : dueTasks) {

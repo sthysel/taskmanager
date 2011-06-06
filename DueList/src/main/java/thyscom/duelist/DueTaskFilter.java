@@ -1,5 +1,6 @@
 package thyscom.duelist;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
@@ -13,18 +14,18 @@ import thyscom.taskmodel.api.TaskManager;
 public class DueTaskFilter {
 
     TaskManager taskManager;
-    
+
     public DueTaskFilter(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
-    
     /**
      * Returns dueTasks for the week
      * @param week
      * @param dueTasks 
      */
-    public void getAllDueTasksForGivenWeek(int week, List<Task> dueTasks) {
+    public List<Task> getAllDueTasksForGivenWeek(int week) {
+        ArrayList<Task> dueTasks = new ArrayList<Task>();
         Interval interval = getInterval(week);
         if (taskManager != null) {
             List<Task> parents = taskManager.getAllParentTasks();
@@ -32,6 +33,7 @@ public class DueTaskFilter {
                 findDueTasks(interval, task, dueTasks);
             }
         }
+        return dueTasks;
     }
 
     /*
