@@ -53,12 +53,12 @@ public class DueTaskFilter {
      * Given the week, get the period of the week
      * @return 
      */
-    private Interval getInterval(int week) {
+    public Interval getInterval(int week) {
         // get today, set the week to the spinner value
         // set the day to thebegiining of the week to get the start time
         // add a week to get the end time
         DateTime now = new DateTime();
-        DateTime begin = now.withWeekyear(week);
+        DateTime begin = now.withYear(now.getYear()).withWeekOfWeekyear(week);
         DateTime end = begin.plusDays(7);
         return new Interval(begin, end);
     }

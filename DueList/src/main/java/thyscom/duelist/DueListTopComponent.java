@@ -18,7 +18,8 @@ import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 
 /**
- * Top component which displays something.
+ * Displays a view of due tasks
+ * @author thys
  */
 @ConvertAsProperties(dtd = "-//thyscom.duelist//DueList//EN",
 autostore = false)
