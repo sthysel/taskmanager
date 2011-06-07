@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.openide.windows.IOProvider;
+import org.openide.windows.InputOutput;
 import thyscom.taskmodel.api.Task;
 import thyscom.taskmodel.api.TaskManager;
 
@@ -13,7 +15,7 @@ import thyscom.taskmodel.api.TaskManager;
  */
 public class DueTaskFilter {
 
-    TaskManager taskManager;
+    private TaskManager taskManager;
 
     public DueTaskFilter(TaskManager taskManager) {
         this.taskManager = taskManager;
@@ -32,6 +34,7 @@ public class DueTaskFilter {
             for (Task task : parents) {
                 findDueTasks(interval, task, dueTasks);
             }
+        } else {
         }
         return dueTasks;
     }
@@ -41,7 +44,10 @@ public class DueTaskFilter {
      */
     private void findDueTasks(Interval interval, Task task, List<Task> dueTasks) {
         DateTime duedate = new DateTime(task.getDueDate());
+        out(duedate.toString());
+        out(interval.toString());
         if (interval.contains(duedate)) {
+            out(duedate.toString());
             dueTasks.add(task);
             for (Task child : task.getChildren()) {
                 findDueTasks(interval, child, dueTasks);
@@ -61,5 +67,15 @@ public class DueTaskFilter {
         DateTime begin = now.withYear(now.getYear()).withWeekOfWeekyear(week);
         DateTime end = begin.plusDays(7);
         return new Interval(begin, end);
+    }
+
+    /**
+     * Write to the output window
+     * @param msg 
+     */
+    private void out(String msg) {
+        InputOutput io = IOProvider.getDefault().getIO("Due Task Filter", false);
+        io.getOut().println(msg);
+        io.getOut().close();
     }
 }
