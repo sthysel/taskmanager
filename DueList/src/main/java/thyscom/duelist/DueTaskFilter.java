@@ -1,12 +1,10 @@
 package thyscom.duelist;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
 import org.joda.time.Interval;
-import org.joda.time.MutableDateTime;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 import thyscom.taskmodel.api.Task;
@@ -37,8 +35,7 @@ public class DueTaskFilter {
             for (Task task : parents) {
                 findDueTasks(interval, task, dueTasks);
             }
-        } else {
-        }
+        } 
         return dueTasks;
     }
 
