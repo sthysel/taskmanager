@@ -1,9 +1,12 @@
 package thyscom.duelist;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.Interval;
+import org.joda.time.MutableDateTime;
 import org.openide.windows.IOProvider;
 import org.openide.windows.InputOutput;
 import thyscom.taskmodel.api.Task;
@@ -61,14 +64,15 @@ public class DueTaskFilter {
      */
     public Interval getInterval(int week) {
         // get today, set the week to the spinner value
-        // set the day to thebegiining of the week to get the start time
+        // set the day to the begining of the week to get the start time
         // add a week to get the end time
-        DateTime now = new DateTime();
-        DateTime begin = now.withYear(now.getYear()).withWeekOfWeekyear(week);
+        DateTime now = new DateTime();      
+        // wow is this the only way ?
+        DateTime begin = now.weekOfWeekyear().setCopy(week).dayOfWeek().setCopy(DateTimeConstants.MONDAY).withHourOfDay(0).withMinuteOfHour(0).withSecondOfMinute(0);
         DateTime end = begin.plusDays(7);
         return new Interval(begin, end);
     }
-
+    
     /**
      * Write to the output window
      * @param msg 

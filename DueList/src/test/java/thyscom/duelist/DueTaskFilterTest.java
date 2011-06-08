@@ -47,6 +47,7 @@ public class DueTaskFilterTest {
         int week = now.getWeekOfWeekyear();
         Interval interval = filter.getInterval(week);
         System.out.println(now);
+        System.out.println("Week: " + week);
         System.out.println(interval.getStart());
         System.out.println(interval.getEnd());
         assert (interval.containsNow());

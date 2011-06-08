@@ -4,6 +4,7 @@ import java.util.Calendar;
 import javax.swing.ActionMap;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import org.joda.time.DateTime;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
@@ -40,7 +41,7 @@ public final class DueListTopComponent extends TopComponent implements ExplorerM
         initComponents();
         setName(NbBundle.getMessage(DueListTopComponent.class, "CTL_DueListTopComponent"));
         setToolTipText(NbBundle.getMessage(DueListTopComponent.class, "HINT_DueListTopComponent"));
-        
+
         setupSpinner();
         setExplorerManager();
         addChildren();
@@ -107,9 +108,10 @@ public final class DueListTopComponent extends TopComponent implements ExplorerM
      * @param evt 
      */
     private void thisWeekBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thisWeekBtnActionPerformed
-        spinner.setValue((Integer) Calendar.getInstance().get(Calendar.WEEK_OF_YEAR));
+        DateTime now = new DateTime();
+        int week = now.getWeekOfWeekyear();
+        spinner.setValue((Integer) week);
     }//GEN-LAST:event_thisWeekBtnActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane dueScrollPane;
     private javax.swing.JLabel jLabel1;
@@ -153,9 +155,10 @@ public final class DueListTopComponent extends TopComponent implements ExplorerM
     }
 
     private void setupSpinner() {
-      int week = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR);
-      SpinnerModel model = new SpinnerNumberModel(week, 1, 52, 1);
-      spinner.setModel(model);
+        DateTime now = new DateTime();
+        int week = now.getWeekOfWeekyear();
+        SpinnerModel model = new SpinnerNumberModel(week, 1, 52, 1);
+        spinner.setModel(model);
     }
 
     // 
@@ -164,6 +167,6 @@ public final class DueListTopComponent extends TopComponent implements ExplorerM
         Node root = new AbstractNode(children);
         explorerManager.setRootContext(root);
         explorerManager.getRootContext().setDisplayName("Due Tasks");
-        
+
     }
 }
