@@ -20,11 +20,11 @@ import thyscom.taskmodel.api.TaskManager;
  * @author thys
  */
 public class TaskChildren extends Children.Array implements ChangeListener, PropertyChangeListener {
-    
+
     private JSpinner spinner;
     private TaskManager taskManager;
     private DueTaskFilter dueFilter;
-    
+
     public TaskChildren(JSpinner spinner) {
         this.spinner = spinner;
         spinner.addChangeListener(this);
@@ -32,7 +32,7 @@ public class TaskChildren extends Children.Array implements ChangeListener, Prop
         dueFilter = new DueTaskFilter(taskManager);
         taskManager.addPropertyChangeListener(this);
     }
-    
+
     @Override
     public Collection<Node> initCollection() {
         // ask dueFilter for the list of currently due tasks
@@ -43,28 +43,27 @@ public class TaskChildren extends Children.Array implements ChangeListener, Prop
             task.addPropertyChangeListener(this);
             dueNodes.add(new TaskNode(task));
         }
-        
+
         return dueNodes;
     }
-    
+
     @Override
     public void stateChanged(ChangeEvent e) {
         updateNodes();
     }
-    
+
     private void updateNodes() {
         remove(getNodes());
         add(initCollection().toArray(new Node[]{}));
     }
-    
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-//        if (thisIsATaskEvent(evt)) {
-//            updateNodes();
-//        }
-        updateNodes();
+        if (thisIsATaskEvent(evt)) {
+            updateNodes();
+        }
     }
-    
+
     private boolean thisIsATaskEvent(PropertyChangeEvent evt) {
         return (evt.getSource() instanceof TaskManager)
                 && (evt.getPropertyName().equals(TaskManager.PROPERTY_TASK_ADD) || evt.getPropertyName().equals(TaskManager.PROPERTY_TASK_REMOVE));

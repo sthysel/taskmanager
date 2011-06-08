@@ -20,12 +20,12 @@ public class TaskNode extends AbstractNode {
         setDisplayName(task.getName());
 
         // need to update the display name when it changes
-        addPropertyChangeListener(new PropertyChangeListener() {
+        task.addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals(Task.PROPERTY_NAME)) {
-                    setName(evt.getNewValue() + "");
+                    setDisplayName(evt.getNewValue() + "");
                 }
             }
         });
